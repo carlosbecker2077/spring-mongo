@@ -5,9 +5,7 @@ import com.springmongo.springmongo.dto.UserDTO;
 import com.springmongo.springmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,5 +24,12 @@ public class UserResource {
         List<User> users = this.userService.findAll();
         List<UserDTO> listDto = users.stream().map(x -> new UserDTO(x)).toList();
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public UserDTO findById(@PathVariable String id) {
+        User user = this.userService.findById(id);
+        return new UserDTO(user);
     }
 }

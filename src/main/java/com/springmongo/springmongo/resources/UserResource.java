@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -50,6 +51,12 @@ public class UserResource {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete (@PathVariable String id) {
         this.userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Void> updatePatch (@PathVariable String id, @RequestBody Map<String, Object> updates) {
+        this.userService.updateComPatch(id, updates);
         return ResponseEntity.noContent().build();
     }
 }

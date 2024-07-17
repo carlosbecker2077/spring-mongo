@@ -1,7 +1,9 @@
 package com.springmongo.springmongo.resources;
 
+import com.springmongo.springmongo.domain.Post;
 import com.springmongo.springmongo.domain.User;
 import com.springmongo.springmongo.dto.UserDTO;
+import com.springmongo.springmongo.repository.PostRepository;
 import com.springmongo.springmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class UserResource {
 
     @Autowired
     UserService userService;
+    @Autowired
+    PostRepository postRepository;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
@@ -32,6 +36,12 @@ public class UserResource {
     public UserDTO findById(@PathVariable String id) {
         User user = this.userService.findById(id);
         return new UserDTO(user);
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = this.userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
     @PostMapping

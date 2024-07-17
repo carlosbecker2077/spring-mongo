@@ -21,8 +21,6 @@ public class UserResource {
 
     @Autowired
     UserService userService;
-    @Autowired
-    PostRepository postRepository;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {

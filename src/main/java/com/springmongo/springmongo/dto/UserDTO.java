@@ -1,12 +1,19 @@
 package com.springmongo.springmongo.dto;
 
 import com.springmongo.springmongo.domain.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     private String id;
+    @NotBlank(message = "name cannot be blank")
+    @Size(min = 3, max = 10, message = "name have to be between 3 and 10")
     private String name;
+    @NotBlank
+    @Email
     private String email;
 
     public UserDTO (User user) {

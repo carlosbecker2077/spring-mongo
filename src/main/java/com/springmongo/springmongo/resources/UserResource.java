@@ -3,10 +3,11 @@ package com.springmongo.springmongo.resources;
 import com.springmongo.springmongo.domain.Post;
 import com.springmongo.springmongo.domain.User;
 import com.springmongo.springmongo.dto.UserDTO;
-import com.springmongo.springmongo.repository.PostRepository;
 import com.springmongo.springmongo.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Validated
 @RequestMapping(value = "/users")
 public class UserResource {
 
@@ -43,7 +45,7 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody UserDTO userDTO) {
         User user = this.userService.fromDTO(userDTO);
         User createdUser = this.userService.insert(user);
         URI uri = ServletUriComponentsBuilder
